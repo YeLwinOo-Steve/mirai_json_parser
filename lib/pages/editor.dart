@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:json_editor/json_editor.dart';
 import 'package:mirai/mirai.dart';
@@ -214,7 +215,15 @@ class _EditorState extends State<Editor> {
     }
   };
   Object? jsonData;
-  Widget? miraiWidget = const SizedBox.shrink();
+  Widget? miraiWidget = null;
+  double uiWidth = 0.0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    uiWidth = MediaQuery.sizeOf(context).width / 2.0;
+  }
+
   void run() {
     setState(() {
       jsonData = jsonStr;
@@ -242,70 +251,117 @@ class _EditorState extends State<Editor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Stack(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Stack(
-                children: [
-                  JsonEditorTheme(
-                    themeData: JsonEditorThemeData(
-                      lightTheme: JsonTheme.light(),
-                      darkTheme: JsonTheme.dark(),
-                    ),
-                    child: JsonEditor.object(
-                      object: jsonStr,
-                      onValueChanged: (value) {
-                        jsonStr = jsonDecode(value.toString());
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            onPressed: () async {
-                              await Clipboard.setData(
-                                  ClipboardData(text: jsonStr.toString()));
-                              showCopySuccessToast();
-                            },
-                            icon: const Icon(
-                              Icons.copy_all,
-                              size: 18,
-                            ),
-                          ),
-                          FilledButton.icon(
-                            onPressed: run,
-                            icon: const Icon(
-                              Icons.play_arrow,
-                              size: 18,
-                            ),
-                            label: const Text('Run'),
-                          ),
-                        ],
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Stack(
+                    children: [
+                      JsonEditorTheme(
+                        themeData: JsonEditorThemeData(
+                          lightTheme: JsonTheme.light(),
+                          darkTheme: JsonTheme.dark(),
+                        ),
+                        child: JsonEditor.object(
+                          object: jsonStr,
+                          onValueChanged: (value) {
+                            jsonStr = jsonDecode(value.toString());
+                          },
+                        ),
                       ),
-                    ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                visualDensity: VisualDensity.compact,
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.dark_mode,
+                                  size: 18,
+                                ),
+                              ),
+                              IconButton(
+                                visualDensity: VisualDensity.compact,
+                                onPressed: () async {
+                                  await Clipboard.setData(
+                                      ClipboardData(text: jsonStr.toString()));
+                                  showCopySuccessToast();
+                                },
+                                icon: const Icon(
+                                  Icons.copy_outlined,
+                                  size: 18,
+                                ),
+                              ),
+                              FilledButton.icon(
+                                onPressed: run,
+                                icon: const Icon(
+                                  Icons.play_arrow,
+                                  size: 18,
+                                ),
+                                label: const Text('Run'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
+              ),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
+                height: double.maxFinite,
+                width: uiWidth,
+                child: Container(
+                  width: double.maxFinite,
+                  height: double.maxFinite,
+                  color: Colors.teal.shade100,
+                  child: miraiWidget ??
+                      const Center(
+                        child: Text('UI Output'),
+                      ),
+                ),
+              )
+            ],
+          ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.bounceInOut,
+            left: MediaQuery.sizeOf(context).width - uiWidth - 13,
+            bottom: MediaQuery.sizeOf(context).height * 0.3,
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                if (uiWidth >= MediaQuery.sizeOf(context).width * 0.2) {
+                  setState(() {
+                    uiWidth -= details.delta.dx;
+                  });
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(1),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      width: 0.4,
+                      color: Theme.of(context).scaffoldBackgroundColor),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                ),
+                child: SvgPicture.asset(
+                  'assets/horizontal_drag.svg',
+                  width: 24,
+                  height: 24,
+                ),
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              width: double.maxFinite,
-              height: double.maxFinite,
-              color: Colors.teal.shade100,
-              child: miraiWidget ??
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-            ),
-          )
         ],
       ),
     );

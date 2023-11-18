@@ -14,6 +14,7 @@ dependencies:
   json_editor: ^0.0.8
   mirai: ^0.5.1
   fluttertoast: ^8.2.4
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +24,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/
