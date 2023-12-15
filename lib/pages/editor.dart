@@ -279,26 +279,26 @@ class _EditorState extends State<Editor> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              IconButton(
-                                visualDensity: VisualDensity.compact,
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.dark_mode,
-                                  size: 18,
-                                ),
-                              ),
-                              IconButton(
-                                visualDensity: VisualDensity.compact,
-                                onPressed: () async {
-                                  await Clipboard.setData(
-                                      ClipboardData(text: jsonStr.toString()));
-                                  showCopySuccessToast();
-                                },
-                                icon: const Icon(
-                                  Icons.copy_outlined,
-                                  size: 18,
-                                ),
-                              ),
+                              // IconButton(
+                              //   visualDensity: VisualDensity.compact,
+                              //   onPressed: () {},
+                              //   icon: const Icon(
+                              //     Icons.dark_mode,
+                              //     size: 18,
+                              //   ),
+                              // ),
+                              // IconButton(
+                              //   visualDensity: VisualDensity.compact,
+                              //   onPressed: () async {
+                              //     await Clipboard.setData(
+                              //         ClipboardData(text: jsonStr.toString()));
+                              //     showCopySuccessToast();
+                              //   },
+                              //   icon: const Icon(
+                              //     Icons.copy_outlined,
+                              //     size: 18,
+                              //   ),
+                              // ),
                               FilledButton.icon(
                                 onPressed: run,
                                 icon: const Icon(

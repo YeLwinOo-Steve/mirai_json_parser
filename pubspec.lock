@@ -309,6 +309,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
+  toasty_box:
+    dependency: "direct main"
+    description:
+      name: toasty_box
+      sha256: "9879a9a424a51a18b472c08a8896fda7c780491dd16a6eeba98d912403705a24"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   typed_data:
     dependency: transitive
     description:

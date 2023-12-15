@@ -1,0 +1,129 @@
+{
+  "type":  "scaffold",
+  "appBar":  {
+    "type":  "appBar",
+    "title":  {
+      "type":  "text",
+      "data":  "Cards"
+    }
+  },
+  "body":  {
+    "type":  "column",
+    "mainAxisAlignment":  "start",
+    "crossAxisAlignment":  "center",
+    "children":  [
+      {
+        "type":  "sizedBox",
+        "height":  12
+      },
+      {
+        "type":  "card",
+        "elevation":  20,
+        "borderOnForeground":  true,
+        "margin":  {
+          "top":  20,
+          "bottom":  20,
+          "right":  20,
+          "left":  20
+        },
+        "child":  {
+          "type":  "column",
+          "children":  [
+            {
+              "type":  "listTile",
+              "leading":  {
+                "type":  "image",
+                "src":  "assets/me.png",
+                "imageType":  "asset",
+                "fit":  "fitHeight",
+                "width":  70,
+                "height":  100
+              },
+              "title":  {
+                "type":  "padding",
+                "padding":  {
+                  "top":  10
+                },
+                "child":  {
+                  "type":  "text",
+                  "data":  "Ye Lwin Oo",
+                  "align":  "center",
+                  "style":  {
+                    "fontSize":  30,
+                    "fontWeight":  "w900"
+                  }
+                }
+              },
+              "subtitle":  {
+                "type":  "padding",
+                "padding":  {
+                  "top":  10,
+                  "bottom":  10
+                },
+                "child":  {
+                  "type":  "text",
+                  "data":  "I'm a passionate Software Developer experienced in crafting full-fledged cross-platform software with around 4+ years of coding experience.",
+                  "align":  "center",
+                  "style":  {
+                    "fontSize":  20,
+                    "color":  "#aa00cc"
+                  }
+                }
+              }
+            },
+            {
+              "type":  "container",
+              "clipBehavior":  "hardEdge",
+              "height":  200,
+              "child":  {
+                "type":  "row",
+                "children":  [
+                  {
+                    "type":  "expanded",
+                    "child":  {
+                      "type":  "icon",
+                      "iconType":  "material",
+                      "icon":  "android",
+                      "size":  60,
+                      "color":  "#79C257"
+                    }
+                  },
+                  {
+                    "type":  "expanded",
+                    "child":  {
+                      "type":  "icon",
+                      "iconType":  "material",
+                      "icon":  "apple",
+                      "size":  60,
+                      "color":  "#ACB3B6"
+                    }
+                  },
+                  {
+                    "type":  "expanded",
+                    "child":  {
+                      "type":  "icon",
+                      "iconType":  "material",
+                      "icon":  "web",
+                      "size":  60,
+                      "color":  "#4889F4"
+                    }
+                  },
+                  {
+                    "type":  "expanded",
+                    "child":  {
+                      "type":  "icon",
+                      "iconType":  "material",
+                      "icon":  "coffee",
+                      "size":  60,
+                      "color":  "#6F4E37"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
